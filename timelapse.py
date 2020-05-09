@@ -14,7 +14,11 @@ default_resolution = (4056,3040)
 def take_picture(res,output):
 	camera = picamera.PiCamera()
 	camera.resolution = res
+	camera.exposure_mode = 'auto'
+	camera.start_preview()
+	time.sleep(2)
 	camera.capture(output)
+	camera.close()
 
 def ssh_client(server, port, user, password):
 	client = paramiko.SSHClient()
@@ -34,6 +38,7 @@ if __name__ == "__main__":
 	config_file = sys.argv[1]
 	config.read(config_file)
 	resolution = (int(config.get('camera','width')), int(config.get('camera','height')))
+	frequency = config.('camera','frequency')
 	ssh_server = config.get('ssh','server')
 	ssh_port = config.get('ssh','port')
 	ssh_user = config.get('ssh','user')
