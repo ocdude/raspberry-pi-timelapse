@@ -58,11 +58,12 @@ if __name__ == "__main__":
 					upload_image(output_file, ssh_remote_path, client)
 				time.sleep(frequency)
 	elif mode == "continuous":
-		for filename in camera.capture_continuous(path.join(output,'img{counter:03d}.jpg')):
-			if upload is True:
-    		# upload image
-				client = ssh_client(ssh_server, ssh_port, ssh_user, ssh_password)
-				upload_image(path.join(output,'%s' % filename), ssh_remote_path, client)
-			time.sleep(frequency)
+		with set_camera(resolution) as camera:
+			for filename in camera.capture_continuous(path.join(output,'img{counter:03d}.jpg')):
+				if upload is True:
+	    		# upload image
+					client = ssh_client(ssh_server, ssh_port, ssh_user, ssh_password)
+					upload_image(path.join(output,'%s' % filename), ssh_remote_path, client)
+				time.sleep(frequency)
 	else:
 		sys.exit('Please set mode in config.ini to overwrite or continuous')
