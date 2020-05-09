@@ -16,7 +16,8 @@ def take_picture(res,output):
 	camera.resolution = res
 	camera.exposure_mode = 'auto'
 	camera.start_preview()
-	time.sleep(2)
+	time.sleep(5)
+	camera.stop_preview()
 	camera.capture(output)
 	camera.close()
 
