@@ -1,9 +1,20 @@
 [camera]
+# width and height control the resolution. For the HQ camera module, the max are 4056x3040
 width = 4056
 height = 3040
+
+# how often, in seconds, the camera will take a picture
+frequency = 120
+
+# where the camera will store images it takes
 output_path = /home/pi/images
 
+# how the timelapse behaves. Possible values are "overwrite" or "continuous"
+mode = ovewrite
+
 [ssh]
+# whether to upload the file
+upload = true
 server = example.com
 port = 22
 user = user
