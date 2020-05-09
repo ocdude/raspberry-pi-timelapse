@@ -48,6 +48,7 @@ if __name__ == "__main__":
 	# create timelapse based on configuration file
 	with set_camera(resolution) as camera:
 		while True:
+				print("taking picture")
 				camera.capture(output)
 				# upload image
 				client = ssh_client(ssh_server, ssh_port, ssh_user, ssh_password)
