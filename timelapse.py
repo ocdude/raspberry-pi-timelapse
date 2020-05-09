@@ -30,7 +30,7 @@ if __name__ == "__main__":
 	# load configuration
 	config = configparser.ConfigParser()
 	config.read('config.ini')
-	resolution = config.get('camera','resolution')
+	resolution = (config.get('camera','width'), config.get('camera','height'))
 	ssh_server = config.get('ssh','server')
 	ssh_port = config.get('ssh','port')
 	ssh_user = config.get('ssh','user')
