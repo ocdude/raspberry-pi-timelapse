@@ -3,6 +3,7 @@
 import time
 import picamera
 import configparser
+import sys
 import paramiko
 import scp
 
@@ -29,15 +30,16 @@ def upload_image(image_path, remote_path, ssh_client):
 if __name__ == "__main__":
 	# load configuration
 	config = configparser.ConfigParser()
-	config.read('config.ini')
+	config_file = sys.argv[1]
+	config.read(config_file)
 	resolution = (int(config.get('camera','width')), int(config.get('camera','height')))
 	ssh_server = config.get('ssh','server')
 	ssh_port = config.get('ssh','port')
 	ssh_user = config.get('ssh','user')
 	ssh_password = config.get('ssh','password')
 	ssh_remote_path = config.get('ssh','remote_path')
-
-	output = 'output.jpg'
+	output = config.get('camera','output_path')
+	
 	take_picture(resolution, output)
 	client = ssh_client(ssh_server, ssh_port, ssh_user, ssh_password)
 	upload_image(output, ssh_remote_path, client)
