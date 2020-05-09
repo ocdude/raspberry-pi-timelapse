@@ -37,20 +37,32 @@ if __name__ == "__main__":
 	config.read(config_file)
 	resolution = (int(config.get('camera','width')), int(config.get('camera','height')))
 	frequency = int(config.get('camera','frequency'))
+	output = config.get('camera','output_path')
+	mode = config.get('camera','mode')
+	upload = config.getboolean('ssh','upload')
 	ssh_server = config.get('ssh','server')
 	ssh_port = config.get('ssh','port')
 	ssh_user = config.get('ssh','user')
 	ssh_password = config.get('ssh','password')
 	ssh_remote_path = config.get('ssh','remote_path')
-	output = path.join(config.get('camera','output_path'),'output.jpg')
 
-
-	# create timelapse based on configuration file
-	with set_camera(resolution) as camera:
-		while True:
-				print("taking picture")
-				camera.capture(output)
-				# upload image
-				client = ssh_client(ssh_server, ssh_port, ssh_user, ssh_password)
-				upload_image(output, ssh_remote_path, client)
-				time.sleep(frequency)
+	if mode == "overwrite":
+		# create timelapse based on configuration file
+		with set_camera(resolution) as camera:
+			while True:
+					output = path.join(output,'output.jpg')
+					camera.capture(output)
+					if upload is True:
+						# upload image
+						client = ssh_client(ssh_server, ssh_port, ssh_user, ssh_password)
+						upload_image(output, ssh_remote_path, client)
+					time.sleep(frequency)
+	elif mode == "continuous":
+		for filename in camera.capture_continuous(path.join(output,'img{counter:03d}.jpg')):
+    	if upload is True:
+						# upload image
+						client = ssh_client(ssh_server, ssh_port, ssh_user, ssh_password)
+						upload_image(path.join(output,'%s' % filename), ssh_remote_path, client)
+			time.sleep(frequency)
+	else:
+		sys.exit('Please set mode in config.ini to overwrite or continuous')
