@@ -6,6 +6,7 @@ import configparser
 import sys
 import paramiko
 import scp
+from os import path
 
 # set a default resolution to the max resolution of the HQ camera module
 default_resolution = (4056,3040)
@@ -38,7 +39,7 @@ if __name__ == "__main__":
 	ssh_user = config.get('ssh','user')
 	ssh_password = config.get('ssh','password')
 	ssh_remote_path = config.get('ssh','remote_path')
-	output = config.get('camera','output_path')
+	output = path.join(config.get('camera','output_path'),'output.jpg')
 	
 	take_picture(resolution, output)
 	client = ssh_client(ssh_server, ssh_port, ssh_user, ssh_password)
