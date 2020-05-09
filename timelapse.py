@@ -35,8 +35,9 @@ if __name__ == "__main__":
 	ssh_port = config.get('ssh','port')
 	ssh_user = config.get('ssh','user')
 	ssh_password = config.get('ssh','password')
+	ssh_remote_path = config.get('ssh','remote_path')
 
 	output = 'output.jpg'
 	take_picture(resolution, output)
 	client = ssh_client(ssh_server, ssh_port, ssh_user, ssh_password)
-	upload_image(output, ".", client)
+	upload_image(output, ssh_remote_path, client)
