@@ -55,7 +55,7 @@ if __name__ == "__main__":
 				if upload is True:
 					# upload image
 					client = ssh_client(ssh_server, ssh_port, ssh_user, ssh_password)
-					upload_image(output, ssh_remote_path, client)
+					upload_image(output_file, ssh_remote_path, client)
 				time.sleep(frequency)
 	elif mode == "continuous":
 		for filename in camera.capture_continuous(path.join(output,'img{counter:03d}.jpg')):
