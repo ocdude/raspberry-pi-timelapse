@@ -11,15 +11,12 @@ from os import path
 # set a default resolution to the max resolution of the HQ camera module
 default_resolution = (4056,3040)
 
-def take_picture(res,output):
+def set_camera():
 	camera = picamera.PiCamera()
 	camera.resolution = res
 	camera.exposure_mode = 'auto'
-	camera.start_preview()
-	time.sleep(5)
-	camera.stop_preview()
-	camera.capture(output)
-	camera.close()
+	time.sleep(1)
+	return camera
 
 def ssh_client(server, port, user, password):
 	client = paramiko.SSHClient()
@@ -46,7 +43,12 @@ if __name__ == "__main__":
 	ssh_password = config.get('ssh','password')
 	ssh_remote_path = config.get('ssh','remote_path')
 	output = path.join(config.get('camera','output_path'),'output.jpg')
-	
-	take_picture(resolution, output)
-	client = ssh_client(ssh_server, ssh_port, ssh_user, ssh_password)
-	upload_image(output, ssh_remote_path, client)
+
+
+	# create timelapse based on configuration file
+	with set_camera() as camera:
+		for filename in camera.capture_continuous(output):
+				# upload image
+				client = ssh_client(ssh_server, ssh_port, ssh_user, ssh_password)
+				upload_image(output, ssh_remote_path, client)
+				time.sleep(frequency)
