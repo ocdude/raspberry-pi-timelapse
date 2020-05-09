@@ -1,0 +1,11 @@
+[camera]
+width = 4056
+height = 3040
+output_path = /home/pi/images
+
+[ssh]
+server = example.com
+port = 22
+user = user
+password = mypassword
+remote_path = /home/user/images
