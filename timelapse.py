@@ -30,10 +30,12 @@ if __name__ == "__main__":
 	# load configuration
 	config = configparser.ConfigParser()
 	config.read('config.ini')
-	resolution = config.get('resolution')
-	ssh_server = config.get('server')
-	ssh_port = config.get('port')
-	ssh_user = config.get('user')
-	ssh_password = config.get('password')
+	resolution = config.get('camera','resolution')
+	ssh_server = config.get('ssh','server')
+	ssh_port = config.get('ssh','port')
+	ssh_user = config.get('ssh','user')
+	ssh_password = config.get('ssh','password')
 
-	take_picture(resolution, 'output.jpg')
+	output = 'output.jpg'
+	take_picture(resolution, output)
+	upload_image(output)
