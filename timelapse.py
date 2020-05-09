@@ -49,14 +49,14 @@ if __name__ == "__main__":
 	if mode == "overwrite":
 		# create timelapse based on configuration file
 		with set_camera(resolution) as camera:
+			output_file = path.join(output,'output.jpg')
 			while True:
-					output = path.join(output,'output.jpg')
-					camera.capture(output)
-					if upload is True:
-						# upload image
-						client = ssh_client(ssh_server, ssh_port, ssh_user, ssh_password)
-						upload_image(output, ssh_remote_path, client)
-					time.sleep(frequency)
+				camera.capture(output)
+				if upload is True:
+					# upload image
+					client = ssh_client(ssh_server, ssh_port, ssh_user, ssh_password)
+					upload_image(output, ssh_remote_path, client)
+				time.sleep(frequency)
 	elif mode == "continuous":
 		for filename in camera.capture_continuous(path.join(output,'img{counter:03d}.jpg')):
 			if upload is True:
