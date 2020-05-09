@@ -38,5 +38,5 @@ if __name__ == "__main__":
 
 	output = 'output.jpg'
 	take_picture(resolution, output)
-	ssh_client(ssh_server, ssh_port, ssh_user, ssh_password)
-	upload_image(output)
+	client = ssh_client(ssh_server, ssh_port, ssh_user, ssh_password)
+	upload_image(output, client)
