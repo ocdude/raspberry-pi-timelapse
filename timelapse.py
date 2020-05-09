@@ -11,7 +11,7 @@ from os import path
 # set a default resolution to the max resolution of the HQ camera module
 default_resolution = (4056,3040)
 
-def set_camera():
+def set_camera(res):
 	camera = picamera.PiCamera()
 	camera.resolution = res
 	camera.exposure_mode = 'auto'
@@ -46,7 +46,7 @@ if __name__ == "__main__":
 
 
 	# create timelapse based on configuration file
-	with set_camera() as camera:
+	with set_camera(resolution) as camera:
 		for filename in camera.capture_continuous(output):
 				# upload image
 				client = ssh_client(ssh_server, ssh_port, ssh_user, ssh_password)
