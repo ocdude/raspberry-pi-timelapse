@@ -38,7 +38,7 @@ if __name__ == "__main__":
 	config_file = sys.argv[1]
 	config.read(config_file)
 	resolution = (int(config.get('camera','width')), int(config.get('camera','height')))
-	frequency = config.('camera','frequency')
+	frequency = config.get('camera','frequency')
 	ssh_server = config.get('ssh','server')
 	ssh_port = config.get('ssh','port')
 	ssh_user = config.get('ssh','user')
