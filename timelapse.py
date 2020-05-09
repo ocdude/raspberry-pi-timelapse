@@ -51,7 +51,7 @@ if __name__ == "__main__":
 		with set_camera(resolution) as camera:
 			output_file = path.join(output,'output.jpg')
 			while True:
-				camera.capture(output)
+				camera.capture(output_file)
 				if upload is True:
 					# upload image
 					client = ssh_client(ssh_server, ssh_port, ssh_user, ssh_password)
