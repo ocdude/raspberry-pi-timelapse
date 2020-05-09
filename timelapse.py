@@ -23,7 +23,7 @@ def ssh_client(server, port, user, password):
 
 def upload_image(image_path, remote_path, ssh_client):
 	scp_client = scp.SCPClient(ssh_client.get_transport())
-	scp_client.put(image_path)
+	scp_client.put(image_path, remote_path)
 
 
 if __name__ == "__main__":
